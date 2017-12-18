@@ -118,7 +118,7 @@ def process_companies_house():
             except (TypeError, ValueError):
                 print("Skipped line because of json error", line)
 
-            if 'company_number' in item:
+            if 'company_number' in item and item['company_number']:
                 process_company(item, output_path / str(chunk))
             i += 1
             if i % 1000 == 0:

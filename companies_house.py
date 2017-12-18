@@ -19,10 +19,8 @@ TEMPLATE = """
     <meta charset="utf-8">
     <body>
         <h1>Companies House</h1>
-
-        <table>{content}</table>
-    </body>
 """
+TEMPLATE_ROW = "<table>{content}</table>"
 ITEM = "<tr><th>{key}</th><td>{value}</td></tr>"
 
 
@@ -74,9 +72,11 @@ def process_company(item, output_path):
         data.append(ITEM.format(key=key, value=value))
 
     template = TEMPLATE.format(content='\n'.join(data))
+    template_row = TEMPLATE_ROW.format(content='\n'.join(data))
     file_path = output_path / "{}.html".format(item['company_number'])
-    with open(file_path, 'a') as f:
-        f.write(template)
+    if file_path.exists():
+        with open(file_path, 'a') as f:
+            f.write(template)
 
 
 def process_companies_house():

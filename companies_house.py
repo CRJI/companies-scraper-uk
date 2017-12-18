@@ -67,8 +67,26 @@ def process_company(item, output_path):
     data = []
 
     flattend = flatten_dict.flatten(item)
+    temp_dict = {}
+
     for key, value in flattend.items():
-        key = key[-1].replace('_', ' ').title()
+        if isinstance(value, list):
+            if not value:
+                flattend.pop(key)
+                continue
+
+            if isinstance(value[0], str):
+                flattend[key] = ' <br> '.join(value)
+            if isinstance(value[0], dict):
+                for item in value:
+                    temp_dict.update(item)
+
+    flattend.update(temp_dict)
+
+    for key, value in flattend.items():
+        if isinstance(key, tuple):
+            key = key[-1]
+        key = key.replace('_', ' ').title()
         data.append(ITEM.format(key=key, value=value))
 
     template = TEMPLATE

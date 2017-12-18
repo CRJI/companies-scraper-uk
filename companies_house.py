@@ -71,12 +71,16 @@ def process_company(item, output_path):
         key = key[-1].replace('_', ' ').title()
         data.append(ITEM.format(key=key, value=value))
 
-    template = TEMPLATE.format(content='\n'.join(data))
+    template = TEMPLATE
     template_row = TEMPLATE_ROW.format(content='\n'.join(data))
+
     file_path = output_path / "{}.html".format(item['company_number'])
-    if file_path.exists():
-        with open(file_path, 'a') as f:
+    if not file_path.exists():
+        with open(file_path, 'w') as f:
             f.write(template)
+
+    with open(file_path, 'a') as f:
+        f.write(template_row)
 
 
 def process_companies_house():
@@ -101,3 +105,7 @@ def process_companies_house():
             i += 1
             if i % 1000 == 0:
                 chunk += 1
+    symlink = OUTPUT_PATH / 'latest'
+    if symlink.exists():
+        symlink.unlink()
+    os.symlink(file_path.stem, symlink)

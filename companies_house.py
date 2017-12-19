@@ -123,6 +123,8 @@ def process_companies_house():
             i += 1
             if i % 1000 == 0:
                 chunk += 1
+                print('.', end='', flush=True)
+    print(' done')
     symlink = OUTPUT_PATH / 'latest'
     if symlink.exists():
         symlink.unlink()

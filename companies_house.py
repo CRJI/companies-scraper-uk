@@ -78,8 +78,8 @@ def process_company(item, output_path):
             if isinstance(value[0], str):
                 flattend[key] = ' <br> '.join(value)
             if isinstance(value[0], dict):
-                for item in value:
-                    temp_dict.update(item)
+                for dex in value:
+                    temp_dict.update(dex)
 
     flattend.update(temp_dict)
 

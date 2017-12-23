@@ -21,7 +21,7 @@ TEMPLATE = """
         <h1>Companies House</h1>
 """
 TEMPLATE_ROW = "<table>{content}</table>"
-ITEM = "<tr><th>{key}</th><td>{value}</td></tr>"
+ITEM = "<tr><th>{key}</th> <td>{value}</td></tr>"
 
 
 def get_download_url():
